@@ -12,13 +12,19 @@ const db = admin.firestore(); // creates a shortcut to access the Firestore data
 
 const restaurantsCol = db.collection('restaurants'); // shortcut to point to our collection
 
-// delete 6HjfW8dJ4KF5KwyKwZpU
-restaurantsCol.doc('6HjfW8dJ4KF5KwyKwZpU').delete()
-  .then(res => console.log('Success deleting 6HjfW8dJ4KF5KwyKwZpU!!'))
-  .catch(err => console.error('Error deleting 6HjfW8dJ4KF5KwyKwZpU: ', err))
+// restaurantsCol.get() // get ALL restaurants
+//   .then(snapshot => {
+//     // loop through all results
+//     snapshot.docs.forEach(doc => console.log(doc.data()))
+//   })
+//   .catch(console.error)
 
-restaurantsCol.doc('1XpWYi25q9qgLmTulbax').delete()
-  .then(res => console.log('Success deleting 1XpWYi25q9qgLmTulbax!!'))
-  .catch(err => console.error('Error deleting 1XpWYi25q9qgLmTulbax: ', err))
-
-
+restaurantsCol
+  // .where('name', '==', 'Bolay')
+  .where('rating', '>=', 4.75)
+  .get()
+  .then(snapshot => {
+    // loop through all results
+    snapshot.docs.forEach(doc => console.log(doc.data()))
+  })
+  .catch(console.error)
